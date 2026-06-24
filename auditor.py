@@ -53,8 +53,9 @@ for users in iam_users['Users']:
         else:
             print("CLEAR!")
 
-
-
-
-
-
+        mfa_devices = iam_service.list_mfa_devices(UserName=users['UserName'])
+        if not mfa_devices['MFADevices']:
+            print("List is empty, REVIEW")
+        else:
+            for mfa_device in mfa_devices['MFADevices']:
+                print("MFA CLEARED!")

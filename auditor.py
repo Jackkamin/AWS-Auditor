@@ -15,9 +15,7 @@ for reservation in response['Reservations']: #A list of batches that was launche
 #specifically looking to find our current buckets ['Buckets']
 for bucket in response_s3['Buckets']:
     bucket_acl = s3_service.get_bucket_acl(Bucket=bucket['Name'])
-
-
-
+# Flags if bucket is public or private.
     is_public = False
 
     for grant in bucket_acl['Grants']:
@@ -25,4 +23,4 @@ for bucket in response_s3['Buckets']:
         grant_type = grant['Grantee']['Type']
         if grant_type == 'Group':
             is_public = True
-    print(bucket['Name'], "Is", is_public)
+    print(bucket['Name'], "Is", is_public)  #False, PRIVATE in this case.

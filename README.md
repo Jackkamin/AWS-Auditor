@@ -5,7 +5,7 @@ A Python command-line tool that checks an AWS account for common cost and securi
 ## What it does
 
 - **EC2 check** — flags any stopped instance as worth reviewing. A stopped instance isn't running, but any EBS volume still attached to it keeps costing money every month until someone notices and cleans it up.
-- **S3 check** — inspects each bucket's access control list (ACL) and flags any bucket with a public grant (i.e. accessible to "AllUsers" rather than a specific AWS account).
+- **S3 check** — inspects each bucket's access control list (ACL) and bucket policy independently. Flags any bucket with a public ACL grant (accessible to "AllUsers") or a bucket policy containing `"Principal": "*"` (open to the public internet). These are two separate ways a bucket can be exposed, so both are checked.
 - **IAM check** — for each IAM user:
   - Flags any access key older than 30 days as due for review (basic key-rotation hygiene).
   - Flags any user with no MFA device registered as a security risk.
@@ -39,9 +39,9 @@ Along the way I found and fixed a couple of real logic bugs rather than just wri
 
 ## Status
 
-Working and complete for its current scope (EC2 stopped-instance check, S3 public bucket check, IAM key age and MFA checks). All checks return structured findings rather than printing directly, which the next set of features build on. Possible future additions:
+Working and complete for its current scope (EC2 stopped-instance check, S3 public ACL and bucket policy checks, IAM key age and MFA checks). All checks return structured findings rather than printing directly, which the next set of features build on. Possible future additions:
 
-- [ ] Check S3 bucket policies in addition to ACLs (some public buckets are made public via policy rather than ACL, and policy-based exposure is the more common real-world cause now)
+- [x] Check S3 bucket policies in addition to ACLs (some public buckets are made public via policy rather than ACL, and policy-based exposure is the more common real-world cause now)
 - [ ] Sort/filter output by severity instead of printing in discovery order
 - [ ] Export results to a CSV or HTML report instead of just printing to terminal
 - [ ] Add cost estimation for flagged EC2 instances and their attached storage

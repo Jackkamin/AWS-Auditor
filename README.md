@@ -11,6 +11,7 @@ A Python command-line tool that checks an AWS account for common cost and securi
   - Flags any user with no MFA device registered as a security risk.
 
 All checks are read-only — the script only reports, it doesn't change anything in the AWS account.
+I do plan on making a tool to actually make changes on AWS but no planned date.
 
 ## Example output
 

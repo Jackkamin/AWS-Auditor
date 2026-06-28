@@ -69,7 +69,7 @@ def main():
     services = {
         'ec2': check_ec2, #ec2 check
         's3': check_s3,   #s3 check
-        'iam': check_iam, #iam check
+        'iam': check_iam, #iam checks
     }
 
     choice = input("Which services do you want to check? (ec2, s3, iam, all): ").strip().lower()
